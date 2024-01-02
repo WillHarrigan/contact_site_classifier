@@ -179,6 +179,7 @@ def check_casp_pdb_seqs(protein_data):
 
 
 def calc_contact_sites(pdb_id, protein_data, in_contact_sites, non_contact_sites, subset_non_contact_sites):
+    parser = PDBParser()
     structure = parser.get_structure(pdb_id, f"{structure_dir}/{pdb_id}.pdb")  # Ensure correct path joining
     protein_structure = structure[0]
     chain = protein_structure['A']
@@ -196,29 +197,26 @@ def calc_contact_sites(pdb_id, protein_data, in_contact_sites, non_contact_sites
                 distance = abs(residue1['CA'] - residue2['CA'])
             except KeyError:
                 continue
-            aa_distance = abs(residue1.id[1] - residue2.id[1])
             if distance < 5:
-                if aa_distance > 2:
+                if abs(residue1.id[1] - residue2.id[1]) > 2:
     #                 print(residue1.id[1], residue1.resname, residue2.id[1], residue2.resname, distance)
                     in_contact_sites[pdb_id].append({
                         'res_1': residue1.id[1], 
                         'res_2': residue2.id[1], 
                         'sig_1': simple_aa(residue1.resname), 
-                        'sig_2': simple_aa(residue2.resname),
-                        'aa_dist': aa_distance,
-                        'arn_dist': distance,
+                        'sig_2': simple_aa(residue2.resname), 
+                        'dist': distance,
                         'in_contact': True
                     })
                     count += 1
             else:
-                if aa_distance > 2:
+                if abs(residue1.id[1] - residue2.id[1]) > 2:
                     non_contact_sites[pdb_id].append({
                         'res_1': residue1.id[1], 
                         'res_2': residue2.id[1], 
                         'sig_1': simple_aa(residue1.resname), 
-                        'sig_2': simple_aa(residue2.resname),
-                        'aa_dist': aa_distance,
-                        'arn_dist': distance,
+                        'sig_2': simple_aa(residue2.resname), 
+                        'dist': distance,
                         'in_contact': False
                     })
 

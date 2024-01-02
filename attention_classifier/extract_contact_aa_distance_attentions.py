@@ -178,7 +178,7 @@ def check_casp_pdb_seqs(protein_data):
     return same_sequence_ids
 
 
-def calc_contact_sites(pdb_id, protein_data, in_contact_sites, non_contact_sites, subset_non_contact_sites):
+def calc_contact_sites(pdb_id):
     structure = parser.get_structure(pdb_id, f"{structure_dir}/{pdb_id}.pdb")  # Ensure correct path joining
     protein_structure = structure[0]
     chain = protein_structure['A']
@@ -227,7 +227,6 @@ def calc_contact_sites(pdb_id, protein_data, in_contact_sites, non_contact_sites
 
     # Optionally print or process the results
     return f"Total contacts found {pdb_id}: {count}"
-
 def contacts_per_pdb(same_sequence_ids, protein_data):
 
     in_contact_sites = defaultdict(list)
@@ -248,7 +247,7 @@ def contacts_per_pdb(same_sequence_ids, protein_data):
 # Initialize contact_data as a defaultdict of lists
 
 def generate_contact_data(in_contact_sites, subset_non_contact_sites):
-
+    # Initialize contact_data as a defaultdict of lists
     contact_data = defaultdict(list)
 
     # Add data from in_contact_sites
@@ -259,7 +258,8 @@ def generate_contact_data(in_contact_sites, subset_non_contact_sites):
                 'res_2': contact['res_2'],
                 'sig_1': contact['sig_1'],
                 'sig_2': contact['sig_2'],
-                'dist': contact['dist'],
+                'aa_dist': contact['aa_dist'],
+                'arn_dist': contact['arn_dist'],
                 'in_contact': contact['in_contact']
             })
 
@@ -271,9 +271,13 @@ def generate_contact_data(in_contact_sites, subset_non_contact_sites):
                 'res_2': non_contact['res_2'],
                 'sig_1': non_contact['sig_1'],
                 'sig_2': non_contact['sig_2'],
-                'dist': non_contact['dist'],
+                'aa_dist': contact['aa_dist'],
+                'arn_dist': contact['arn_dist'],
                 'in_contact': non_contact['in_contact']
             })
+
+# contact_data is now a defaultdict containing all the data from both dictionaries
+
     return contact_data
 
 
