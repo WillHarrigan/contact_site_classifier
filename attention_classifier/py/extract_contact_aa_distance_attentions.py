@@ -33,11 +33,10 @@ from sklearn.model_selection import GridSearchCV
 # Set directories
 
 base_dir = '/Users/williamharrigan/Desktop/Github/contact_site_classifier/attention_classifier/data_files/'
-desktop = '/Users/williamharrigan/Desktop/'
-fasta_file = base_dir + 'rcsb_pdb_3KYN.fasta'
-pdb_filename = base_dir + '3kyn.pdb'
 structure_dir = base_dir +'structure_files/'
 fasta_dir = base_dir +'fasta_files/'
+
+# CASP is outside of base_dir because the file is very large and could not be uploaded to GitHub
 casp_dir = '/Users/williamharrigan/Desktop/UH/Year_2/Research/contact_site_classifier/casp7/' 
 casp_95 = casp_dir + 'training_95'
 
