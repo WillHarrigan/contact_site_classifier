@@ -178,7 +178,7 @@ def check_casp_pdb_seqs(protein_data):
     return same_sequence_ids
 
 
-def calc_contact_sites(pdb_id):
+def calc_contact_sites(pdb_id, protein_data, in_contact_sites, non_contact_sites, subset_non_contact_sites):
     structure = parser.get_structure(pdb_id, f"{structure_dir}/{pdb_id}.pdb")  # Ensure correct path joining
     protein_structure = structure[0]
     chain = protein_structure['A']
